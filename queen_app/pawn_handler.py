@@ -40,8 +40,8 @@ class PawnHandler:
         """
         while True:
             result = self.get_position_data()
-            print(f"[PAWN CHECK] -> {result['pawn_url']}")
-            print(f"[PAWN CHECK] -> {result['response']}")
+            print(f"[PAWN CHECK] -> {result['pawn_url']}", flush=True)
+            print(f"[PAWN CHECK] -> {result['response']}", flush=True)
             
             # pass the response to some handler
             if callback:

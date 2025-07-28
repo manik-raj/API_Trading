@@ -42,7 +42,7 @@ def process_position_data(response):
 
         if not previous:
             # ✅ New position
-            print("Entered new position")
+            print("Entered new position", flush=True)
             status, pending = get_pending_positions(symbol)
             if not pending["data"]:
                 current_mode = get_margin_mode(symbol)
