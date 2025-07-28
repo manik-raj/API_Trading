@@ -22,7 +22,7 @@ def process_position_data(response):
 
     new_data = response["response"].get("data")
     if new_data is None:
-        send_notification("ℹ️ No open positions from copy trader.")
+        #send_notification("ℹ️ No open positions from copy trader.")
         return
 
     current_copy_ids = []
