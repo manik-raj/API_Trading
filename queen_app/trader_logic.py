@@ -22,7 +22,8 @@ def process_position_data(response):
 
     new_data = response["response"].get("data")
     if new_data is None:
-        #send_notification("ℹ️ No open positions from copy trader.")
+        print("***************", flush=True)
+        #print("ℹ️ No open positions from copy trader.", flush=True)
         return
 
     current_copy_ids = []
@@ -42,7 +43,9 @@ def process_position_data(response):
 
         if not previous:
             # ✅ New position
+            print("***************", flush=True)
             print("Entered new position", flush=True)
+            print("***************", flush=True)
             status, pending = get_pending_positions(symbol)
             if not pending["data"]:
                 current_mode = get_margin_mode(symbol)
@@ -52,6 +55,15 @@ def process_position_data(response):
             side_str = "BUY" if side == 2 else "SELL"
             trade_side = "OPEN"
             result = place_order(symbol, qty=my_qty, side=side_str, trade_side=trade_side)
+
+            print("***************", flush=True)
+            print("EXIT new position", flush=True)
+
+            print("***************", flush=True)
+            print("Entered new position", flush=True)
+            print(result[0], flush=True)
+            print(result[1]["code"], flush=True)
+            print("***************", flush=True)
 
             if result[0] == 200 and result[1]["code"] == 0:
                 my_id = extract_my_position_id(symbol, side_str)

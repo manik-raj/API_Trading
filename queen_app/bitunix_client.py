@@ -53,13 +53,16 @@ def signed_request(method, endpoint, params=None, body=None):
             res = requests.get(url, headers=headers, params=params, timeout=10)
         else:
             res = requests.post(url, headers=headers, data=body_str, timeout=10)
-            print()
-            print()
-            print(res.json())
-            print()
-            print()
+            print("***************", flush=True)
+            print("after request:", flush=True)
+            print(res.status_code, flush=True)
+            print(res.json(), flush=True)
+            print("***************", flush=True)
         return res.status_code, res.json()
     except Exception as e:
+        print("***************", flush=True)
+        print("Exception in singed request",str(e), flush=True)
+        print("***************", flush=True)
         return 500, {"error": str(e)}
 
 # === 🔁 Trade & Position Functions ===
@@ -70,8 +73,9 @@ def get_pending_positions(symbol=None):
 
 def place_order(symbol, qty, side, trade_side, order_type="MARKET", price=None,
                 tp_price=None, sl_price=None, client_id=None, reduce_only=False):
-    print("Entered Place order")
-
+    print("***************", flush=True)
+    print("Entered Place order", flush=True)
+    print("***************", flush=True)
     body = OrderedDict([
         ("symbol", symbol),
         ("qty", str(qty)),
@@ -101,6 +105,10 @@ def place_order(symbol, qty, side, trade_side, order_type="MARKET", price=None,
     return signed_request("POST", "/api/v1/futures/trade/place_order", body=body)
 
 def flash_close_position(position_id):
+
+    print("***************", flush=True)
+    print("Entered flash close", flush=True)
+    print("***************", flush=True)
     body = {"positionId": position_id}
     return signed_request("POST", "/api/v1/futures/trade/flash_close_position", body=body)
 
