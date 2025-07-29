@@ -9,7 +9,7 @@ def fetch_positions(final_url):
             return {"error": f"Bitunix API error", "status_code": response.status_code, "body": response.json()}
         
         json_data = response.json()
-        if not json_data.get("data"):
+        if json_data.get("data") is None:
             return {"data": None}
         
         results = []
