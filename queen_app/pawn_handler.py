@@ -28,6 +28,8 @@ class PawnHandler:
                 "response": response.json()
             }
         except Exception as e:
+            print("caught exception in get_position_data", flush=True)
+            print(str(e), flush=True)
             return {
                 "pawn_url": url,
                 "status_code": None,
@@ -39,13 +41,18 @@ class PawnHandler:
         Loop through pawns forever. Optional callback to handle the response.
         """
         while True:
-            result = self.get_position_data()
-            print(f"[PAWN CHECK] -> {result['pawn_url']}", flush=True)
-            print(f"[PAWN CHECK] -> {result['response']}", flush=True)
-            
-            # pass the response to some handler
-            if callback:
-                callback(result)
-
+            try:
+                result = self.get_position_data()
+                print(f"[PAWN CHECK] -> {result['pawn_url']}", flush=True)
+                if "response" in result:
+                    print(f"[PAWN CHECK] -> {result['response']}", flush=True)
+                elif "error" in result:
+                    print(f"[PAWN ERROR] -> {result['error']}", flush=True)
+                
+                # pass the response to some handler
+                if callback:
+                    callback(result)
+            except Exception as e:
+                print(f"[PAWN EXCEPTION] -> {str(e)}", flush=True)
             wait_time = random.randint(8, 12)
             time.sleep(wait_time)
